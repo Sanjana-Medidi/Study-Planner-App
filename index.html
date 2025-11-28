@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Personal Study Planner</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="title">
+        📚 <span>Personal Study Planner</span>
+    </div>
+
+    <div class="container">
+        <div class="form-box">
+            <form method="post" action="/generate">
+                <div id="subjects-container">
+                    <div class="subject-group">
+                        <label for="subject">Subject:</label>
+                        <input type="text" name="subject" required>
+
+                        <label for="deadline">Deadline:</label>
+                        <input type="date" name="deadline" required>
+                    </div>
+                </div>
+
+                <button type="button" onclick="addSubject()">+ Add Another Subject</button>
+
+                <label for="daily_hours">Available Study Hours per Day:</label>
+                <input type="number" step="0.5" name="daily_hours" required>
+
+                <button type="submit" class="generate">✨ Generate Schedule</button>
+                <a href="/view_schedule" class="view">📅 View Schedule</a>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function addSubject() {
+            const container = document.getElementById('subjects-container');
+            const group = document.createElement('div');
+            group.classList.add('subject-group');
+            group.innerHTML = `
+                <label>Subject:</label>
+                <input type="text" name="subject" required>
+                <label>Deadline:</label>
+                <input type="date" name="deadline" required>
+            `;
+            container.appendChild(group);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Study Schedule</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            background: linear-gradient(to right, #3a0ca3, #7209b7);
+            font-family: 'Segoe UI', sans-serif;
+            padding: 30px;
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #f5f5ff;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(114, 9, 183, 0.4);
+            color: #2e2e42;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #7209b7;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #ffffff;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+            color: #3a0ca3;
+        }
+
+        th {
+            background-color: #e0aaff;
+            color: #3a0ca3;
+        }
+
+        tr:hover {
+            background-color: #f3e8ff;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #7b2cbf;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .completed {
+            color: #00c896;
+            font-weight: bold;
+        }
+
+        button {
+            padding: 6px 12px;
+            border: none;
+            background-color: #9d4edd;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #7b2cbf;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🗓️ Your Study Schedule</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Hours to Study</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in schedule %}
+                <tr>
+                    <td>{{ entry[1] }}</td> <!-- subject_name -->
+                    <td>{{ entry[2] }} hr {{ entry[3] }} min</td> <!-- hours + minutes -->
+                    <td>{{ entry[4] }}</td> <!-- study_date -->
+                    <td>
+                        {% if entry[5] %}
+                            <span class="completed">✔ Completed</span>
+                        {% else %}
+                            <form method="POST" action="/mark_completed/{{ entry[0] }}">
+                                <button type="submit">Mark Completed</button>
+                            </form>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="/" class="back-link">← Back to Planner</a>
+    </div>
+</body>
+</html>
